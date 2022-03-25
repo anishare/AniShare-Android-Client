@@ -9,7 +9,8 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.anishare.anishare.model.AnimeDTO
+import com.anishare.anishare.model.Anime
+import com.anishare.anishare.model.UserResponse
 import com.anishare.anishare.ui.components.ElementItem
 import com.anishare.anishare.ui.theme.AniShareTheme
 
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     ElementItem(
-                        data = AnimeDTO.mock()
+                        data = UserResponse.mock()
                     )
                 }
             }
@@ -41,7 +42,7 @@ fun DefaultPreview() {
             color = MaterialTheme.colors.background
         ) {
             ElementItem(
-                data = AnimeDTO.mock()
+                data = UserResponse.mock()
             )
         }
     }
