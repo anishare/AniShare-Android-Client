@@ -6,7 +6,7 @@ import retrofit2.http.Header
 
 interface UserService {
 
-    @GET("/user/getTo")
+    @GET("/users/getTo")
     suspend fun getTo(
         @Header("Authorization") token: String
     ): List<UserResponse>

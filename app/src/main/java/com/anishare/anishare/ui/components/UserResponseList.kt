@@ -4,12 +4,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.anishare.anishare.model.UserResponse
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.anishare.anishare.ui.data.UserViewModel
 
 @Composable
-fun UserResponseList(listResponse: MutableList<UserResponse>) {
+fun UserResponseList(userViewModel: UserViewModel = viewModel()) {
+    userViewModel.getByTo()
     LazyColumn {
-        items(items = listResponse) { item ->
+        items(items = userViewModel.userResponse) { item ->
             ElementItem(data = item)
         }
     }
@@ -18,9 +20,5 @@ fun UserResponseList(listResponse: MutableList<UserResponse>) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewUserResponseList() {
-    UserResponseList(listResponse = mutableListOf(
-        UserResponse.mock(),
-        UserResponse.mock(),
-        UserResponse.mock()
-    ))
+    UserResponseList()
 }
