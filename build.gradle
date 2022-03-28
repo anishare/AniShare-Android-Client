@@ -3,6 +3,11 @@ buildscript {
         compose_version = '1.1.1'
         hilt_version = '2.41'
     }
+    repositories {
+        maven {
+            url "https://pkgs.dev.azure.com/MicrosoftDeviceSDK/DuoSDK-Public/_packaging/Duo-SDK-Feed/maven/v1"
+        }
+    }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }

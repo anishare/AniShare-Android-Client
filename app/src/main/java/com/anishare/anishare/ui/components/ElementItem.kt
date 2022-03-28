@@ -33,7 +33,7 @@ fun ElementItem(modifier: Modifier = Modifier, data: UserResponse) {
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
     ) {
-        Surface() {
+        Surface {
             Row(
                 Modifier
                     .padding(4.dp)
