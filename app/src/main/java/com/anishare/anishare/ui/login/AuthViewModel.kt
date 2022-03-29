@@ -18,21 +18,25 @@ class AuthViewModel @Inject constructor(
 
     val loadingState = mutableStateOf(LoadingState.IDLE)
 
-    fun signin(email: String, password: String) {
+    fun isSignedIn(): Boolean {
+        return authRepo.isUserAuthenticated()
+    }
+
+    fun signIn(email: String, password: String) {
         viewModelScope.launch {
             loadingState.value = LoadingState.LOADING
             if (authRepo.isUserAuthenticated()) {
                 Log.e(TAG,"User already logged in")
                 loadingState.value = LoadingState.error("User already logged in")
             } else {
-                authRepo.signin(email, password, loadingState = loadingState)
+                authRepo.signIn(email, password, loadingState = loadingState)
             }
         }
     }
 
-    fun signout() {
+    fun signOut() {
         viewModelScope.launch {
-            authRepo.signout()
+            authRepo.signOut()
         }
     }
 }
