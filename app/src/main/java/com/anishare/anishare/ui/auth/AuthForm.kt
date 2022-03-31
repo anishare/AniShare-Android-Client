@@ -1,20 +1,25 @@
-package com.anishare.anishare.ui.login
+package com.anishare.anishare.ui.auth
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.anishare.anishare.ui.components.TopAppBar
 import com.anishare.anishare.ui.data.AuthViewModel
+import com.anishare.anishare.util.AuthFormType
 import com.anishare.anishare.util.LoadingState
 
 @Composable
-fun Login(viewModel: AuthViewModel = viewModel()) {
+fun AuthForm(authFormType: AuthFormType, viewModel: AuthViewModel = viewModel()) {
+
+    val context = LocalContext.current
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -25,7 +30,7 @@ fun Login(viewModel: AuthViewModel = viewModel()) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(title = { Text(text = "Login") })
+            TopAppBar(title = { Text(text = authFormType.name) })
         }
     ) {
         Column(
@@ -59,24 +64,23 @@ fun Login(viewModel: AuthViewModel = viewModel()) {
                     .padding(top = 8.dp),
                 enabled = email.isNotEmpty() && password.isNotEmpty(),
                 onClick = {
-                    viewModel.signIn(email.trim(), password.trim())
+                    when (authFormType) {
+                        AuthFormType.SignIn -> viewModel.signIn(email.trim(), password.trim())
+                        AuthFormType.SignUp -> viewModel.signUp(email.trim(), password.trim())
+                    }
                 }
             ) {
-                Text(text = "Login")
+                Text(text = authFormType.name)
             }
         }
         when (state.value?.status) {
             LoadingState.Status.SUCCESS -> LaunchedEffect(state.value?.status) {
-                val res = scaffoldState.snackbarHostState.showSnackbar("Success")
-                if (res == SnackbarResult.Dismissed) {
-                    viewModel.setLoadingState(LoadingState.IDLE)
-                }
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                viewModel.setLoadingState(LoadingState.IDLE)
             }
             LoadingState.Status.FAILED -> LaunchedEffect(state.value?.status) {
-                val res = scaffoldState.snackbarHostState.showSnackbar(state.value?.msg!!)
-                if (res == SnackbarResult.Dismissed) {
-                    viewModel.setLoadingState(LoadingState.IDLE)
-                }
+                Toast.makeText(context, state.value?.msg, Toast.LENGTH_SHORT).show()
+                viewModel.setLoadingState(LoadingState.IDLE)
             }
             else -> {}
         }

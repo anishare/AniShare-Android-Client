@@ -1,4 +1,4 @@
-package com.anishare.anishare.ui.login
+package com.anishare.anishare.ui.auth
 
 import android.util.Log
 import com.anishare.anishare.util.LoadingState
@@ -36,7 +36,17 @@ class AuthRepoImpl (
         password: String,
         setLoadingState: (loadingState: LoadingState) -> Unit
     ) {
-        TODO("Not yet implemented")
+        setLoadingState(LoadingState.LOADING)
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d(TAG, "User created successfully")
+                    setLoadingState(LoadingState.LOADED)
+                } else {
+                    Log.e(TAG, it.exception?.message.toString())
+                    setLoadingState(LoadingState.error(it.exception?.message.toString()))
+                }
+            }
     }
 
     override suspend fun getToken(): Task<GetTokenResult>? {

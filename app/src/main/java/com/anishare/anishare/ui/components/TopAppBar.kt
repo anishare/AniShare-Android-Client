@@ -22,6 +22,7 @@ fun TopAppBar(
     title: @Composable () -> Unit = {}
 ) {
     val loadingState = authViewModel.loadingState.observeAsState()
+    val auth = authViewModel.isUserAuthenticated.observeAsState()
     Column(modifier = Modifier.fillMaxWidth()) {
         TopAppBar(
             backgroundColor = MaterialTheme.colors.background,
@@ -36,7 +37,7 @@ fun TopAppBar(
                 }
             },
             actions = {
-                if (authViewModel.isSignedIn()) {
+                if (auth.value!!) {
                     IconButton(onClick = {
                         authViewModel.signOut()
                     }) {

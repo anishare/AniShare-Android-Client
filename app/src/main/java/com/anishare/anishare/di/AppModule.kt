@@ -2,8 +2,8 @@ package com.anishare.anishare.di
 
 import android.content.Context
 import com.anishare.anishare.BaseApplication
-import com.anishare.anishare.ui.login.AuthRepo
-import com.anishare.anishare.ui.login.AuthRepoImpl
+import com.anishare.anishare.ui.auth.AuthRepo
+import com.anishare.anishare.ui.auth.AuthRepoImpl
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides

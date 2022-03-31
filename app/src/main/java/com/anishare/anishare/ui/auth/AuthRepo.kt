@@ -1,4 +1,4 @@
-package com.anishare.anishare.ui.login
+package com.anishare.anishare.ui.auth
 
 import com.anishare.anishare.util.LoadingState
 import com.google.android.gms.tasks.Task

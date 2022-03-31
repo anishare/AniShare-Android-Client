@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anishare.anishare.model.UserData
 import com.anishare.anishare.network.UserService
-import com.anishare.anishare.ui.login.AuthRepo
+import com.anishare.anishare.ui.auth.AuthRepo
 import com.anishare.anishare.ui.util.UserDataEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
