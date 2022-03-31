@@ -1,32 +1,58 @@
 package com.anishare.anishare.ui.data
 
 import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anishare.anishare.model.UserResponse
+import com.anishare.anishare.model.UserData
 import com.anishare.anishare.network.UserService
+import com.anishare.anishare.ui.login.AuthRepo
+import com.anishare.anishare.ui.util.UserDataEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "UserViewModel"
+
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    private val userService: UserService
-): ViewModel() {
+    private val userService: UserService,
+    private val authRepo: AuthRepo
+) : ViewModel() {
 
-    var userResponse: List<UserResponse> by mutableStateOf(listOf())
+    private val _userData: MutableLiveData<List<UserData>> by lazy {
+        MutableLiveData<List<UserData>>().also {
+            getByTo(UserDataEvent.GetListData)
+        }
+    }
+    val userData: LiveData<List<UserData>>
+        get() = _userData
 
-    fun getByTo() {
+    private fun getByTo(event: UserDataEvent) {
+        viewModelScope.launch {
+            authRepo.getToken()?.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d(TAG, "Grabbed token successfully")
+                    when (event) {
+                        is UserDataEvent.GetListData -> getData("Bearer ${it.result.token}")
+                        is UserDataEvent.GetItem -> Log.d(TAG, "Get Item ${event.id}")
+                    }
+                } else {
+                    Log.e(TAG, it.exception?.message.toString())
+                }
+            }
+        }
+    }
+
+    private fun getData(token: String?) {
         viewModelScope.launch {
             try {
-                val response = userService.getTo("Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsifQ.eyJleHAiOjE2NDgzMDg2MTIsIm5iZiI6MTY0ODMwNTAxMiwidmVyIjoiMS4wIiwiaXNzIjoiaHR0cHM6Ly9hbmlzaGFyZS5iMmNsb2dpbi5jb20vNmFhODIxZGItNzllMi00ZGNhLWFiMGQtZmRlYTQyMTc1NjZkL3YyLjAvIiwic3ViIjoiNTY2YmYyYWEtMjJkNy00MDgyLWE3NjYtOGY5OGM0YjA4YzhiIiwiYXVkIjoiMWY2YWRjODgtM2RkMi00MzFkLWI2NGQtNDYwNTJiYmMzN2QzIiwiaWF0IjoxNjQ4MzA1MDEyLCJhdXRoX3RpbWUiOjE2NDgyNzYzMzIsIm9pZCI6IjU2NmJmMmFhLTIyZDctNDA4Mi1hNzY2LThmOThjNGIwOGM4YiIsIm5hbWUiOiJ0ZXN0IiwiZW1haWxzIjpbInRlc3R1c2VyQHRlc3QuY29tIl0sInRmcCI6IkIyQ18xX3NpZ25pbl9zaWdudXAifQ.Dw6V5LeBE7OIHmhFdZl1rDaTigqP1s6AowmeeHRluQ0z5zQSBF-nOVPDep41bGYIVyAc0Ot4EUDHMlo_SVwzHBq0zXFVtRw0i7VTN239ZofKt4ZcJwXbZIOx2tPVeIaFce8wNklZztU1XJL6USLFuBrhdsqBasALQkZ_-HJ8w-cRB7VauLGHbX7Z-rgbvc71aCvnkkCPhFeoW0fWnnj2X_q5Pt2VeyuGQ1sgfbVF_0q2Hp_rbKVSQ0weuFn6wjKf-X142mAaKxD4C2EJZSoWARet052kEJLdqMvP5VG92mi1YfLNsN0K2sxZWLgrICFVRzkqRmA0A2qKSSFpsCXtYA")
-                Log.i("UserViewModel", response.size.toString())
-                userResponse = response
+                val response = userService.getTo(token!!)
+                Log.d(TAG, response.size.toString())
+                _userData.value = response
             } catch (e: Exception) {
-                Log.e("UserViewModel", e.message.toString())
+                Log.e(TAG, e.message.toString())
             }
         }
     }

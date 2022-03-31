@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -20,6 +21,7 @@ fun TopAppBar(
     authViewModel: AuthViewModel = viewModel(),
     title: @Composable () -> Unit = {}
 ) {
+    val loadingState = authViewModel.loadingState.observeAsState()
     Column(modifier = Modifier.fillMaxWidth()) {
         TopAppBar(
             backgroundColor = MaterialTheme.colors.background,
@@ -55,7 +57,7 @@ fun TopAppBar(
                 }
             }
         )
-        if (authViewModel.loadingState.value.status == LoadingState.Status.RUNNING) {
+        if (loadingState.value?.status == LoadingState.Status.RUNNING) {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
         }
     }

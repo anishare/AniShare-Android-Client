@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.anishare.anishare.R
 import com.anishare.anishare.model.AnimeMAL
-import com.anishare.anishare.model.UserResponse
+import com.anishare.anishare.model.UserData
 
 @Composable
-fun ElementItem(modifier: Modifier = Modifier, data: UserResponse) {
+fun ElementItem(data: UserData) {
     Card(
         modifier = Modifier
             .padding(8.dp, 4.dp)
@@ -88,5 +88,5 @@ fun ElementItem(modifier: Modifier = Modifier, data: UserResponse) {
 @Preview(showBackground = true)
 @Composable
 fun ElementItemPreview() {
-    ElementItem(data = UserResponse.mock())
+    ElementItem(data = UserData.mock())
 }

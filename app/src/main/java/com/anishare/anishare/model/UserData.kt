@@ -2,7 +2,7 @@ package com.anishare.anishare.model
 
 import java.util.*
 
-data class UserResponse(
+data class UserData(
     val id: UUID,
     val fromUser: String,
     val toUser: String,
@@ -12,7 +12,7 @@ data class UserResponse(
     val isFinished: Boolean
 ) {
     companion object {
-        fun mock() = UserResponse(
+        fun mock() = UserData(
             id = UUID.randomUUID(),
             fromUser = "test",
             toUser = "test2",

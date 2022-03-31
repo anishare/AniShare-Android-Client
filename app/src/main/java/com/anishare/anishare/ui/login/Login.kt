@@ -3,6 +3,7 @@ package com.anishare.anishare.ui.login
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -18,7 +19,7 @@ fun Login(viewModel: AuthViewModel = viewModel()) {
     var password by remember { mutableStateOf("") }
 
     val scaffoldState = rememberScaffoldState()
-    val state by viewModel.loadingState
+    val state = viewModel.loadingState.observeAsState()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -53,7 +54,8 @@ fun Login(viewModel: AuthViewModel = viewModel()) {
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp),
+                    .height(50.dp)
+                    .padding(top = 8.dp),
                 enabled = email.isNotEmpty() && password.isNotEmpty(),
                 onClick = {
                     viewModel.signIn(email.trim(), password.trim())
@@ -62,17 +64,17 @@ fun Login(viewModel: AuthViewModel = viewModel()) {
                 Text(text = "Login")
             }
         }
-        when (state.status) {
-            LoadingState.Status.SUCCESS -> LaunchedEffect(state.status) {
+        when (state.value?.status) {
+            LoadingState.Status.SUCCESS -> LaunchedEffect(state.value?.status) {
                 val res = scaffoldState.snackbarHostState.showSnackbar("Success")
                 if (res == SnackbarResult.Dismissed) {
-                    viewModel.loadingState.value = LoadingState.IDLE
+                    viewModel.setLoadingState(LoadingState.IDLE)
                 }
             }
-            LoadingState.Status.FAILED -> LaunchedEffect(state.status) {
-                val res = scaffoldState.snackbarHostState.showSnackbar(state.msg!!)
+            LoadingState.Status.FAILED -> LaunchedEffect(state.value?.status) {
+                val res = scaffoldState.snackbarHostState.showSnackbar(state.value?.msg!!)
                 if (res == SnackbarResult.Dismissed) {
-                    viewModel.loadingState.value = LoadingState.IDLE
+                    viewModel.setLoadingState(LoadingState.IDLE)
                 }
             }
             else -> {}

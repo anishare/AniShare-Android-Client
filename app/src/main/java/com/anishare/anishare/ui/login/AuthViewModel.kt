@@ -1,7 +1,8 @@
 package com.anishare.anishare.ui.login
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anishare.anishare.util.LoadingState
@@ -16,7 +17,14 @@ class AuthViewModel @Inject constructor(
     private val authRepo: AuthRepo
 ) : ViewModel() {
 
-    val loadingState = mutableStateOf(LoadingState.IDLE)
+    private val _loadingState = MutableLiveData(LoadingState.IDLE)
+    val loadingState: LiveData<LoadingState>
+        get() = _loadingState
+
+    fun setLoadingState(loadingState: LoadingState) {
+        _loadingState.value = loadingState
+    }
+
 
     fun isSignedIn(): Boolean {
         return authRepo.isUserAuthenticated()
@@ -24,12 +32,12 @@ class AuthViewModel @Inject constructor(
 
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
-            loadingState.value = LoadingState.LOADING
+            setLoadingState(LoadingState.LOADING)
             if (authRepo.isUserAuthenticated()) {
                 Log.e(TAG,"User already logged in")
-                loadingState.value = LoadingState.error("User already logged in")
+                setLoadingState(LoadingState.error("User already logged in"))
             } else {
-                authRepo.signIn(email, password, loadingState = loadingState)
+                authRepo.signIn(email, password, setLoadingState = { setLoadingState(it) })
             }
         }
     }
