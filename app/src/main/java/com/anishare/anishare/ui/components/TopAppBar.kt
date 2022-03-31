@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.anishare.anishare.R
-import com.anishare.anishare.ui.login.AuthViewModel
+import com.anishare.anishare.ui.data.AuthViewModel
 import com.anishare.anishare.util.LoadingState
 
 @Composable

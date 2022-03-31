@@ -10,6 +10,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.anishare.anishare.ui.components.TopAppBar
+import com.anishare.anishare.ui.data.AuthViewModel
 import com.anishare.anishare.util.LoadingState
 
 @Composable
