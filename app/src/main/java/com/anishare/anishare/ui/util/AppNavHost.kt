@@ -31,7 +31,10 @@ fun AppNavHost(
             UserResponseList()
         }
         composable(AniShareScreen.Login.name) {
-            AuthForm(AuthFormType.SignIn)
+            AuthForm(AuthFormType.Login)
+        }
+        composable(AniShareScreen.SignUp.name) {
+            AuthForm(authFormType = AuthFormType.SignUp)
         }
     }
 }

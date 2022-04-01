@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AniShareTheme {
-                AuthForm(AuthFormType.SignIn)
+                AuthForm(AuthFormType.Login)
             }
         }
     }
@@ -46,6 +46,6 @@ fun MainApp() {
 @Composable
 fun DefaultPreview() {
     AniShareTheme {
-        AuthForm(AuthFormType.SignIn)
+        AuthForm(AuthFormType.Login)
     }
 }

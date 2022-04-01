@@ -2,6 +2,7 @@ package com.anishare.anishare.util
 
 enum class AniShareScreen {
     Login,
+    SignUp,
     Dashboard;
 
     companion object {

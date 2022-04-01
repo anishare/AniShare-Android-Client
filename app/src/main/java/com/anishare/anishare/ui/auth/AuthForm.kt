@@ -23,19 +23,25 @@ fun AuthForm(authFormType: AuthFormType, viewModel: AuthViewModel = viewModel())
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     val scaffoldState = rememberScaffoldState()
     val state = viewModel.loadingState.observeAsState()
+
+    val enableButton =
+        if (authFormType == AuthFormType.Login) email.isNotEmpty() && password.isNotEmpty()
+        else email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(title = { Text(text = authFormType.name) })
-        }
+        },
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(24.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -48,6 +54,7 @@ fun AuthForm(authFormType: AuthFormType, viewModel: AuthViewModel = viewModel())
                     Text(text = "Email")
                 }
             )
+            Spacer(modifier = Modifier.size(16.dp))
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
@@ -57,15 +64,27 @@ fun AuthForm(authFormType: AuthFormType, viewModel: AuthViewModel = viewModel())
                     Text(text = "Password")
                 }
             )
+            if (authFormType == AuthFormType.SignUp) {
+                Spacer(modifier = Modifier.size(16.dp))
+                OutlinedTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    visualTransformation = PasswordVisualTransformation(),
+                    value = confirmPassword,
+                    onValueChange = { confirmPassword = it },
+                    label = {
+                        Text(text = "Confirm Password")
+                    }
+                )
+            }
+            Spacer(modifier = Modifier.size(16.dp))
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
-                    .padding(top = 8.dp),
-                enabled = email.isNotEmpty() && password.isNotEmpty(),
+                    .height(50.dp),
+                enabled = enableButton,
                 onClick = {
                     when (authFormType) {
-                        AuthFormType.SignIn -> viewModel.signIn(email.trim(), password.trim())
+                        AuthFormType.Login -> viewModel.signIn(email.trim(), password.trim())
                         AuthFormType.SignUp -> viewModel.signUp(email.trim(), password.trim())
                     }
                 }
