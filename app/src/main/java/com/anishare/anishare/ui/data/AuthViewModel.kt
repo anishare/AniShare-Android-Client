@@ -31,7 +31,7 @@ class AuthViewModel @Inject constructor(
         reloadAuth()
     }
 
-    fun reloadAuth() {
+    private fun reloadAuth() {
         _isUserAuthenticated.value = authRepo.isUserAuthenticated()
     }
 

@@ -10,11 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.anishare.anishare.ui.auth.AuthForm
+import com.anishare.anishare.ui.components.UserResponseList
 import com.anishare.anishare.ui.theme.AniShareTheme
 import com.anishare.anishare.ui.util.AppNavHost
 import com.anishare.anishare.util.AniShareScreen
-import com.anishare.anishare.util.AuthFormType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AniShareTheme {
-                AuthForm(AuthFormType.Login)
+                MainApp()
             }
         }
     }
@@ -46,6 +45,6 @@ fun MainApp() {
 @Composable
 fun DefaultPreview() {
     AniShareTheme {
-        AuthForm(AuthFormType.Login)
+        MainApp()
     }
 }

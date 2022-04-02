@@ -15,6 +15,7 @@
         android:theme="@style/Theme.AniShare">
         <activity
             android:name=".ui.MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true"
             android:theme="@style/Theme.AniShare">
             <intent-filter>

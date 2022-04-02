@@ -4,21 +4,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.rounded.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.anishare.anishare.R
 import com.anishare.anishare.ui.data.AuthViewModel
 import com.anishare.anishare.util.LoadingState
 
 @Composable
 fun TopAppBar(
-    authViewModel: AuthViewModel = viewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
     title: @Composable () -> Unit = {}
 ) {
     val loadingState = authViewModel.loadingState.observeAsState()
@@ -31,8 +31,8 @@ fun TopAppBar(
             navigationIcon = {
                 IconButton(onClick = { /*TODO*/ }) {
                     Icon(
-                        imageVector = Icons.Rounded.ArrowBack,
-                        contentDescription = "Go Back"
+                        imageVector = Icons.Filled.List,
+                        contentDescription = "Drawer"
                     )
                 }
             },
@@ -48,11 +48,10 @@ fun TopAppBar(
                     }
                 } else {
                     IconButton(onClick = {
-                        authViewModel.signOut()
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_baseline_login_24),
-                            contentDescription = "Logout"
+                            contentDescription = "Login"
                         )
                     }
                 }

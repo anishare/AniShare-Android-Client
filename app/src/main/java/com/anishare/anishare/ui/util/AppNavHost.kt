@@ -5,8 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.anishare.anishare.ui.components.UserResponseList
 import com.anishare.anishare.ui.auth.AuthForm
+import com.anishare.anishare.ui.components.UserResponseList
 import com.anishare.anishare.util.AniShareScreen
 import com.anishare.anishare.util.AuthFormType
 
@@ -21,20 +21,34 @@ fun AppNavHost(
         modifier = modifier
     ) {
         composable(AniShareScreen.Dashboard.name) {
-//            OverviewBody(
-//                onClickSeeAllAccounts = { navController.navigate(RallyScreen.Accounts.name) },
-//                onClickSeeAllBills = { navController.navigate(RallyScreen.Bills.name) },
-//                onAccountClick = { name ->
-//                    navigateToSingleAccount(navController, name)
-//                }
-//            )
+            //            OverviewBody(
+            //                onClickSeeAllAccounts = { navController.navigate(RallyScreen.Accounts.name) },
+            //                onClickSeeAllBills = { navController.navigate(RallyScreen.Bills.name) },
+            //                onAccountClick = { name ->
+            //                    navigateToSingleAccount(navController, name)
+            //                }
+            //            )
             UserResponseList()
         }
         composable(AniShareScreen.Login.name) {
-            AuthForm(AuthFormType.Login)
+            AuthForm(
+                AuthFormType.Login,
+                onSuccess = {
+                    navController.navigate(AniShareScreen.Dashboard.name) {
+                        popUpTo(AniShareScreen.Dashboard.name)
+                    }
+                }
+            )
         }
         composable(AniShareScreen.SignUp.name) {
-            AuthForm(authFormType = AuthFormType.SignUp)
+            AuthForm(
+                authFormType = AuthFormType.SignUp,
+                onSuccess = {
+                    navController.navigate(AniShareScreen.Login.name) {
+                        popUpTo(AniShareScreen.Login.name)
+                    }
+                }
+            )
         }
     }
 }
