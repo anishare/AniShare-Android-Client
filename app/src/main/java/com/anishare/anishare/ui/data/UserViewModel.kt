@@ -23,13 +23,13 @@ class UserViewModel @Inject constructor(
 
     private val _userData: MutableLiveData<List<UserData>> by lazy {
         MutableLiveData<List<UserData>>().also {
-            getByTo(UserDataEvent.GetListData)
+            launchEvent(UserDataEvent.GetListData)
         }
     }
     val userData: LiveData<List<UserData>>
         get() = _userData
 
-    fun getByTo(event: UserDataEvent) {
+    fun launchEvent(event: UserDataEvent) {
         viewModelScope.launch {
             authRepo.getToken()?.addOnCompleteListener {
                 if (it.isSuccessful) {
