@@ -1,12 +1,18 @@
-package com.anishare.anishare.model
+package com.anishare.anishare.domain.model
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
+@Entity(tableName = "UserData")
 data class UserData(
-    val id: UUID,
+    @PrimaryKey
+    val id: UUID = UUID.randomUUID(),
     val fromUser: String,
     val toUser: String,
     val dateCreated: String,
+    @Embedded(prefix = "anime_")
     val item: Anime,
     val isAnime: Boolean,
     val isFinished: Boolean

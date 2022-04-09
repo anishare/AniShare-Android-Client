@@ -1,4 +1,4 @@
-package com.anishare.anishare.model
+package com.anishare.anishare.domain.model
 
 sealed class Response<out T> {
     object Loading: Response<Nothing>()

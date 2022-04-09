@@ -1,6 +1,6 @@
 package com.anishare.anishare.network.dto
 
-import com.anishare.anishare.model.Anime
+import com.anishare.anishare.domain.model.Anime
 import java.util.*
 
 data class UserResponseDTO(

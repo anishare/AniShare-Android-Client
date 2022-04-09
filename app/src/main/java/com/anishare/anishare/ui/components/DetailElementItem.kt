@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.anishare.anishare.R
-import com.anishare.anishare.model.AnimeMAL
-import com.anishare.anishare.model.UserData
+import com.anishare.anishare.domain.model.AnimeMAL
+import com.anishare.anishare.domain.model.UserData
 
 @Composable
 fun ElementItem(data: UserData) {

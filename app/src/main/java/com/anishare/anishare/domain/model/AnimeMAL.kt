@@ -1,4 +1,4 @@
-package com.anishare.anishare.model
+package com.anishare.anishare.domain.model
 
 data class AnimeMAL(
     val id: Int,

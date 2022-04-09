@@ -1,6 +1,6 @@
 package com.anishare.anishare.network
 
-import com.anishare.anishare.model.UserData
+import com.anishare.anishare.domain.model.UserData
 import retrofit2.http.GET
 import retrofit2.http.Header
 

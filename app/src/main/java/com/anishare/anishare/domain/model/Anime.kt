@@ -1,9 +1,13 @@
-package com.anishare.anishare.model
+package com.anishare.anishare.domain.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
+@Entity(tableName = "Anime")
 data class Anime(
-    val id: UUID,
+    @PrimaryKey
+    val id: UUID = UUID.randomUUID(),
     val name: String,
     val malID: String
 ) {

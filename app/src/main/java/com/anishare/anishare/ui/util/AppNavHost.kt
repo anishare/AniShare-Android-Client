@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.anishare.anishare.ui.auth.AuthForm
+import com.anishare.anishare.ui.components.AddItem
 import com.anishare.anishare.ui.components.UserResponseList
 import com.anishare.anishare.util.AniShareScreen
 import com.anishare.anishare.util.AuthFormType
@@ -28,7 +29,7 @@ fun AppNavHost(
             //                    navigateToSingleAccount(navController, name)
             //                }
             //            )
-            UserResponseList()
+            UserResponseList(navController = navController)
         }
         composable(AniShareScreen.Login.name) {
             AuthForm(
@@ -49,6 +50,9 @@ fun AppNavHost(
                     }
                 }
             )
+        }
+        composable(AniShareScreen.AddItem.name) {
+            AddItem(navController = navController)
         }
     }
 }
