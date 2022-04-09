@@ -24,7 +24,7 @@ import com.anishare.anishare.domain.model.AnimeMAL
 import com.anishare.anishare.domain.model.UserData
 
 @Composable
-fun ElementItem(data: UserData) {
+fun DetailElementItem(data: UserData) {
     Card(
         modifier = Modifier
             .padding(8.dp, 4.dp)
@@ -88,5 +88,5 @@ fun ElementItem(data: UserData) {
 @Preview(showBackground = true)
 @Composable
 fun ElementItemPreview() {
-    ElementItem(data = UserData.mock())
+    DetailElementItem(data = UserData.mock())
 }
