@@ -2,6 +2,7 @@ package com.anishare.anishare.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -11,8 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.anishare.anishare.domain.model.Anime
+import com.anishare.anishare.domain.model.AnimeMALNode
 import com.anishare.anishare.domain.model.UserData
+import com.anishare.anishare.ui.data.MALViewModel
 import com.anishare.anishare.ui.data.UserViewModel
 import com.anishare.anishare.ui.util.UserDataEvent
 import java.util.*
@@ -21,11 +26,15 @@ import java.util.*
 fun AddItem(
     modifier: Modifier = Modifier,
     navController: NavController,
-    userViewModel: UserViewModel = hiltViewModel()
+    userViewModel: UserViewModel = hiltViewModel(),
+    malViewModel: MALViewModel = hiltViewModel()
 ) {
 
     var name by remember { mutableStateOf("") }
     var isAnime by remember { mutableStateOf(true) }
+    var selectedMALItem: AnimeMALNode? by remember { mutableStateOf(null) }
+
+    val searchResult = malViewModel.searchResults(name).collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
@@ -68,6 +77,13 @@ fun AddItem(
                         .padding(start = 4.dp)
                 )
             }
+            Divider()
+            LazyRow {
+                items(items = searchResult) {
+                    CardElementItem(modifier = Modifier.padding(8.dp), malNode = it)
+                }
+            }
+            Divider()
             Button(
                 onClick = {
                     userViewModel.launchEvent(

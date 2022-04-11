@@ -1,10 +1,13 @@
 package com.anishare.anishare.di
 
+import com.anishare.anishare.network.MALService
 import com.anishare.anishare.network.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -26,5 +29,25 @@ object NetworkModule {
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMALService(): MALService {
+        val okHttpClient = OkHttpClient.Builder().apply {
+            addInterceptor(
+                Interceptor { chain ->
+                    val builder = chain.request().newBuilder()
+                    builder.header("X-MAL-CLIENT-ID", System.getenv("MAL-CLIENT-ID")!!)
+                    return@Interceptor chain.proceed(builder.build())
+                }
+            )
+        }.build()
+        return Retrofit.Builder()
+            .baseUrl("https://api.myanimelist.net/v2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(MALService::class.java)
     }
 }

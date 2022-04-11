@@ -20,22 +20,27 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.anishare.anishare.R
+import com.anishare.anishare.domain.model.AnimeMALNode
 import com.anishare.anishare.domain.model.UserData
 
 @Composable
 fun CardElementItem(
     modifier: Modifier = Modifier,
-    data: UserData
+    userData: UserData? = null,
+    malNode: AnimeMALNode? = null
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(15.dp),
         elevation = 5.dp
     ) {
-        Box(modifier = Modifier.height(250.dp)) {
+        Box(modifier = Modifier.height(250.dp).width(150.dp)) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://cdn.myanimelist.net/images/anime/1105/119414l.jpg")
+                    .data(
+                        malNode?.node?.main_picture?.medium ?:
+                        "https://cdn.myanimelist.net/images/anime/1105/119414l.jpg"
+                    )
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.ic_launcher_foreground),
@@ -62,10 +67,12 @@ fun CardElementItem(
                     .padding(12.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                Text(
-                    text = data.item.name,
-                    style = TextStyle(color = Color.White, fontSize = 16.sp)
-                )
+                (userData?.item?.name ?: malNode?.node?.title)?.let {
+                    Text(
+                        text = it,
+                        style = TextStyle(color = Color.White, fontSize = 16.sp)
+                    )
+                }
             }
         }
     }
@@ -74,5 +81,5 @@ fun CardElementItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewCardElemeneItem() {
-    CardElementItem(data = UserData.mock())
+    CardElementItem(userData = UserData.mock())
 }

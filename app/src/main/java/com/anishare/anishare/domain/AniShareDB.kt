@@ -2,10 +2,13 @@ package com.anishare.anishare.domain
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.anishare.anishare.domain.dao.AnimeMALDao
 import com.anishare.anishare.domain.dao.UserDataDao
 import com.anishare.anishare.domain.model.Anime
+import com.anishare.anishare.domain.model.AnimeMAL
 import com.anishare.anishare.domain.model.UserData
 
+// TODO - Add MalDao and MAL class
 @Database(
     entities = [Anime::class, UserData::class],
     version = 1

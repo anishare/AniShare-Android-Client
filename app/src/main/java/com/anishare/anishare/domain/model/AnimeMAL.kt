@@ -1,6 +1,14 @@
 package com.anishare.anishare.domain.model
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+
+//TODO - Add Entity
+//@Entity(tableName = "AnimeMAL")
 data class AnimeMAL(
+//    @PrimaryKey
     val id: Int,
     val title: String,
     val main_picture: MainPicture? = null,
@@ -23,6 +31,20 @@ data class AnimeMAL(
     }
 }
 
+data class AnimeMALNode(
+    val node: AnimeMAL
+)
+
+data class MALPaging(
+    val next: String? = null,
+    val previous: String? = null
+)
+
+data class MALResponse<T>(
+    val data: T,
+    val paging: MALPaging
+)
+
 data class MainPicture(
     val large: String? = null,
     val medium: String
@@ -35,6 +57,7 @@ data class MainPicture(
 }
 
 data class AlternateTitles(
+    @Embedded
     val synonyms: List<String>? = null,
     val en: String,
     val ja: String?

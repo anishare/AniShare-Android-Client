@@ -52,7 +52,7 @@ fun UserResponseList(
             contentPadding = PaddingValues(8.dp)
         ) {
             items(items = userData) { item ->
-                CardElementItem(modifier = Modifier.padding(8.dp), data = item)
+                CardElementItem(modifier = Modifier.padding(8.dp), userData = item)
             }
         }
     }

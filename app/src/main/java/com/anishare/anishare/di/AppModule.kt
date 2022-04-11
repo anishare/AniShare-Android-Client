@@ -6,8 +6,10 @@ import androidx.room.Room
 import com.anishare.anishare.BaseApplication
 import com.anishare.anishare.domain.AniShareDB
 import com.anishare.anishare.domain.dao.UserDataDao
+import com.anishare.anishare.domain.repository.MALRepo
 import com.anishare.anishare.domain.repository.UserDataRepo
 import com.anishare.anishare.domain.repository.UserDataRepoImpl
+import com.anishare.anishare.network.MALService
 import com.anishare.anishare.network.UserService
 import com.anishare.anishare.ui.auth.AuthRepo
 import com.anishare.anishare.ui.auth.AuthRepoImpl
@@ -49,5 +51,12 @@ object AppModule {
     @Singleton
     fun providesUserDataRepo(db: AniShareDB, userService: UserService): UserDataRepo {
         return UserDataRepoImpl(db.userDataDao, userService)
+    }
+
+    @Provides
+    @Singleton
+    fun providesMalRep(db: AniShareDB, malService: MALService): MALRepo {
+        // TODO - Add MalDao
+        return MALRepo(malService = malService)
     }
 }
