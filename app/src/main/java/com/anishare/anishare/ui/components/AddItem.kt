@@ -1,5 +1,6 @@
 package com.anishare.anishare.ui.components
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -9,6 +10,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -20,6 +23,7 @@ import com.anishare.anishare.domain.model.UserData
 import com.anishare.anishare.ui.data.MALViewModel
 import com.anishare.anishare.ui.data.UserViewModel
 import com.anishare.anishare.ui.util.UserDataEvent
+import com.anishare.anishare.util.AniShareScreen
 import java.util.*
 
 @Composable
@@ -35,6 +39,8 @@ fun AddItem(
     var selectedMALItem: AnimeMALNode? by remember { mutableStateOf(null) }
 
     val searchResult = malViewModel.searchResults(name).collectAsLazyPagingItems()
+
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -78,10 +84,23 @@ fun AddItem(
                 )
             }
             Divider()
+            Text(
+                text = "Select an entry which closely relates to what you want to recommend",
+                fontWeight = FontWeight.Bold,
+            )
             LazyRow {
                 items(items = searchResult) {
-                    CardElementItem(modifier = Modifier.padding(8.dp), malNode = it)
+                    CardElementItem(
+                        modifier = Modifier.padding(8.dp),
+                        malNode = it,
+                        onClick = { selectedMALItem = it },
+                        selected = selectedMALItem?.node?.id == it?.node?.id
+                    )
                 }
+            }
+            selectedMALItem?.let {
+                Text(text = "Selected item:")
+                Text(text = "Name: ${it.node.title}")
             }
             Divider()
             Button(
@@ -96,13 +115,17 @@ fun AddItem(
                                 isFinished = false,
                                 item = Anime(
                                     name = name,
-                                    malID = "1"
+                                    malID = selectedMALItem?.node?.id ?: -1
                                 )
                             )
                         )
                     )
+                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                    navController.navigate(AniShareScreen.Dashboard.name) {
+                        popUpTo(AniShareScreen.Dashboard.name)
+                    }
                 },
-                enabled = name.isNotEmpty(),
+                enabled = name.isNotEmpty() && selectedMALItem != null,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Add")

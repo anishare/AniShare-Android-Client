@@ -38,7 +38,7 @@ fun DetailElementItem(data: UserData) {
                 Modifier
                     .padding(4.dp)
                     .fillMaxSize()) {
-                if (data.item.malID.isNotEmpty()) {
+                if (data.item.malID != -1) {
                     Image(
                         painter = rememberAsyncImagePainter(
                             model = AnimeMAL.mock().main_picture?.medium,

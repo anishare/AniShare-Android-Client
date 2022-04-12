@@ -1,9 +1,12 @@
 package com.anishare.anishare.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,11 +30,20 @@ import com.anishare.anishare.domain.model.UserData
 fun CardElementItem(
     modifier: Modifier = Modifier,
     userData: UserData? = null,
-    malNode: AnimeMALNode? = null
+    malNode: AnimeMALNode? = null,
+    onClick: (() -> Unit)? = null,
+    selected: Boolean? = null
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .selectable(
+                selected = selected ?: false,
+                onClick = onClick ?: {}
+            )
+        ,
         shape = RoundedCornerShape(15.dp),
+        border = if (selected == true) BorderStroke(1.dp, MaterialTheme.colors.primary) else null,
         elevation = 5.dp
     ) {
         Box(modifier = Modifier.height(250.dp).width(150.dp)) {
