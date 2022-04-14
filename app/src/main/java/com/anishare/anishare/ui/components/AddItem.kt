@@ -105,21 +105,21 @@ fun AddItem(
             Divider()
             Button(
                 onClick = {
-                    userViewModel.launchEvent(
-                        UserDataEvent.AddItem(
-                            UserData(
-                                isAnime = isAnime,
-                                dateCreated = Calendar.getInstance().time.toString(),
-                                fromUser = "me",
-                                toUser = "me",
-                                isFinished = false,
-                                item = Anime(
-                                    name = name,
-                                    malID = selectedMALItem?.node?.id ?: -1
-                                )
-                            )
-                        )
-                    )
+//                    userViewModel.launchEvent(
+//                        UserDataEvent.AddItem(
+//                            UserData(
+//                                isAnime = isAnime,
+//                                dateCreated = Calendar.getInstance().time.toString(),
+//                                fromUser = "me",
+//                                toUser = "me",
+//                                isFinished = false,
+//                                item = Anime(
+//                                    name = name,
+//                                    malID = selectedMALItem?.node?.id ?: -1
+//                                )
+//                            )
+//                        )
+//                    )
                     Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
                     navController.navigate(AniShareScreen.Dashboard.name) {
                         popUpTo(AniShareScreen.Dashboard.name)

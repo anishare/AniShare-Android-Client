@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anishare.anishare.domain.model.UserData
+import com.anishare.anishare.domain.model.UserDataWithAnime
 import com.anishare.anishare.domain.repository.UserDataRepo
 import com.anishare.anishare.ui.auth.AuthRepo
 import com.anishare.anishare.ui.util.UserDataEvent
@@ -21,12 +22,12 @@ class UserViewModel @Inject constructor(
     private val authRepo: AuthRepo
 ) : ViewModel() {
 
-    private val _userData: MutableLiveData<List<UserData>> by lazy {
-        MutableLiveData<List<UserData>>().also {
+    private val _userData: MutableLiveData<List<UserDataWithAnime>> by lazy {
+        MutableLiveData<List<UserDataWithAnime>>().also {
             launchEvent(UserDataEvent.GetListData)
         }
     }
-    val userData: LiveData<List<UserData>>
+    val userData: LiveData<List<UserDataWithAnime>>
         get() = _userData
 
     fun launchEvent(event: UserDataEvent) {

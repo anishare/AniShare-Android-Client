@@ -9,8 +9,8 @@ import com.anishare.anishare.domain.model.AnimeMAL
 @Dao
 interface AnimeMALDao {
 
-//    @Query("SELECT * FROM AnimeMAL")
-//    fun getAll(): LiveData<List<AnimeMAL>>
+    @Query("SELECT * FROM AnimeMAL")
+    fun getAll(): LiveData<List<AnimeMAL>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOne(animeMAL: AnimeMAL)
@@ -21,6 +21,6 @@ interface AnimeMALDao {
     @Delete
     suspend fun deleteOne(animeMAL: AnimeMAL)
 
-//    @Query("SELECT * FROM AnimeMAL WHERE id = :id")
-//    suspend fun getOneById(id: Int): AnimeMAL?
+    @Query("SELECT * FROM AnimeMAL WHERE id = :id")
+    suspend fun getOneById(id: Int): AnimeMAL?
 }

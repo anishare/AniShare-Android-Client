@@ -38,7 +38,7 @@ object NetworkModule {
             addInterceptor(
                 Interceptor { chain ->
                     val builder = chain.request().newBuilder()
-                    builder.header("X-MAL-CLIENT-ID", System.getenv("MAL-CLIENT-ID")!!)
+                    builder.header("X-MAL-CLIENT-ID", "d724bb7da9b07c3e80b69b2aaa7e5538")
                     return@Interceptor chain.proceed(builder.build())
                 }
             )

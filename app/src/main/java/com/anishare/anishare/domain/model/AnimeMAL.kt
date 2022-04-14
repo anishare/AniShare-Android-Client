@@ -5,27 +5,30 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
-//TODO - Add Entity
-//@Entity(tableName = "AnimeMAL")
+@Entity(tableName = "AnimeMAL")
 data class AnimeMAL(
-//    @PrimaryKey
+    @PrimaryKey
     val id: Int,
     val title: String,
-    val main_picture: MainPicture? = null,
-    val alternative_titles: AlternateTitles? = null,
-    val genres: List<Genres>,
+    @Embedded
+    val main_picture: MainPicture?,
+//    @Ignore
+//    val alternative_titles: AlternateTitles?,
+//    @Ignore
+//    val genres: List<Genres>,
     val status: String,
     val num_episodes: Int,
-    val related_anime: List<RelatedAnime>
+//    @Ignore
+//    val related_anime: List<RelatedAnime>
 ) {
     companion object {
         fun mock() = AnimeMAL(
             id = 123,
             title = "Attack on titan",
             main_picture = MainPicture.mock(),
-            genres = emptyList(),
+//            genres = emptyList(),
             num_episodes = 24,
-            related_anime = emptyList(),
+//            related_anime = emptyList(),
             status = "Ongoing"
         )
     }
@@ -57,8 +60,8 @@ data class MainPicture(
 }
 
 data class AlternateTitles(
-    @Embedded
-    val synonyms: List<String>? = null,
+    @Ignore
+    val synonyms: List<String>?,
     val en: String,
     val ja: String?
 )

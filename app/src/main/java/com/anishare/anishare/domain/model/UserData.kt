@@ -12,8 +12,7 @@ data class UserData(
     val fromUser: String,
     val toUser: String,
     val dateCreated: String,
-    @Embedded(prefix = "anime_")
-    val item: Anime,
+    val item: UUID,
     val isAnime: Boolean,
     val isFinished: Boolean
 ) {
@@ -23,7 +22,7 @@ data class UserData(
             fromUser = "test",
             toUser = "test2",
             dateCreated = "2022-03-22",
-            item = Anime.mock(),
+            item = Anime.mock().id,
             isAnime = true,
             isFinished = false
         )

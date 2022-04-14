@@ -24,12 +24,12 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.anishare.anishare.R
 import com.anishare.anishare.domain.model.AnimeMALNode
-import com.anishare.anishare.domain.model.UserData
+import com.anishare.anishare.domain.model.UserDataWithAnime
 
 @Composable
 fun CardElementItem(
     modifier: Modifier = Modifier,
-    userData: UserData? = null,
+    userData: UserDataWithAnime? = null,
     malNode: AnimeMALNode? = null,
     onClick: (() -> Unit)? = null,
     selected: Boolean? = null
@@ -79,7 +79,7 @@ fun CardElementItem(
                     .padding(12.dp),
                 contentAlignment = Alignment.BottomStart
             ) {
-                (userData?.item?.name ?: malNode?.node?.title)?.let {
+                (userData?.animeWithAnimeMAL?.anime?.name ?: malNode?.node?.title)?.let {
                     Text(
                         text = it,
                         style = TextStyle(color = Color.White, fontSize = 16.sp)
@@ -93,5 +93,5 @@ fun CardElementItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewCardElemeneItem() {
-    CardElementItem(userData = UserData.mock())
+    CardElementItem()
 }

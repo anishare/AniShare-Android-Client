@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.anishare.anishare.domain.dao.UserDataDao
 import com.anishare.anishare.domain.model.UserData
+import com.anishare.anishare.domain.model.UserDataWithAnime
 import com.anishare.anishare.network.UserService
 import java.util.*
 
@@ -13,7 +14,7 @@ class UserDataRepoImpl(
     private val dao: UserDataDao,
     private val userService: UserService
 ): UserDataRepo {
-    override suspend fun getAll(token: String?): LiveData<List<UserData>> {
+    override suspend fun getAll(token: String?): LiveData<List<UserDataWithAnime>> {
         try {
             val data = userService.getTo(token!!)
             dao.insertAll(data)
