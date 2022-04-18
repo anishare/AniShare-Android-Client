@@ -19,18 +19,15 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.anishare.anishare.domain.model.Anime
 import com.anishare.anishare.domain.model.AnimeMALNode
-import com.anishare.anishare.domain.model.UserData
+import com.anishare.anishare.ui.data.AnimeViewModel
 import com.anishare.anishare.ui.data.MALViewModel
-import com.anishare.anishare.ui.data.UserViewModel
-import com.anishare.anishare.ui.util.UserDataEvent
 import com.anishare.anishare.util.AniShareScreen
-import java.util.*
 
 @Composable
 fun AddItem(
     modifier: Modifier = Modifier,
     navController: NavController,
-    userViewModel: UserViewModel = hiltViewModel(),
+    animeViewModel: AnimeViewModel = hiltViewModel(),
     malViewModel: MALViewModel = hiltViewModel()
 ) {
 
@@ -105,21 +102,12 @@ fun AddItem(
             Divider()
             Button(
                 onClick = {
-//                    userViewModel.launchEvent(
-//                        UserDataEvent.AddItem(
-//                            UserData(
-//                                isAnime = isAnime,
-//                                dateCreated = Calendar.getInstance().time.toString(),
-//                                fromUser = "me",
-//                                toUser = "me",
-//                                isFinished = false,
-//                                item = Anime(
-//                                    name = name,
-//                                    malID = selectedMALItem?.node?.id ?: -1
-//                                )
-//                            )
-//                        )
-//                    )
+                    animeViewModel.addData(
+                        Anime(
+                            name = selectedMALItem?.node?.title!!,
+                            malID = selectedMALItem?.node?.id!!
+                        )
+                    )
                     Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
                     navController.navigate(AniShareScreen.Dashboard.name) {
                         popUpTo(AniShareScreen.Dashboard.name)

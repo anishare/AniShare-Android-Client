@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.anishare.anishare.domain.model.Anime
 import com.anishare.anishare.domain.model.AnimeWithAnimeMAL
-import com.anishare.anishare.domain.model.UserData
-import com.anishare.anishare.domain.model.UserDataWithAnime
 import java.util.*
 
 @Dao
@@ -13,7 +11,7 @@ interface AnimeDao {
 
     @Transaction
     @Query("SELECT * FROM Anime")
-    fun getAll(): LiveData<List<AnimeWithAnimeMAL>>
+    suspend fun getAll(): LiveData<List<AnimeWithAnimeMAL>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOne(anime: Anime)
@@ -22,7 +20,7 @@ interface AnimeDao {
     suspend fun insertAll(animeList: List<Anime>)
 
     @Delete
-    suspend fun deleteOne(userData: UserData)
+    suspend fun deleteOne(anime: Anime)
 
     @Query("SELECT * FROM Anime WHERE id = :id")
     suspend fun getOneById(id: UUID): Anime?
