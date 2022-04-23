@@ -13,7 +13,7 @@ private const val TAG = "AnimeRepo"
 class AnimeRepo(
     private val animeDao: AnimeDao
 ) {
-    suspend fun getAll(): LiveData<List<AnimeWithAnimeMAL>> {
+    fun getAll(): LiveData<List<AnimeWithAnimeMAL>> {
         return animeDao.getAll()
     }
 

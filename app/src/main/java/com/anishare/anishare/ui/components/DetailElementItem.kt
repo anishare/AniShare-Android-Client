@@ -38,20 +38,18 @@ fun DetailElementItem(data: UserData) {
                 Modifier
                     .padding(4.dp)
                     .fillMaxSize()) {
-                if (data.item.malID != -1) {
-                    Image(
-                        painter = rememberAsyncImagePainter(
-                            model = AnimeMAL.mock().main_picture?.medium,
-                            placeholder = painterResource(R.drawable.ic_launcher_foreground),
-                            fallback = painterResource(id = R.drawable.ic_launcher_background),
-                        ),
-                        contentDescription = "Background",
-                        modifier = Modifier
-                            .height(32.dp)
-                            .width(32.dp)
-                            .clip(CircleShape)
-                    )
-                }
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = AnimeMAL.mock().main_picture?.medium,
+                        placeholder = painterResource(R.drawable.ic_launcher_foreground),
+                        fallback = painterResource(id = R.drawable.ic_launcher_background),
+                    ),
+                    contentDescription = "Background",
+                    modifier = Modifier
+                        .height(32.dp)
+                        .width(32.dp)
+                        .clip(CircleShape)
+                )
                 Column(
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
@@ -60,7 +58,7 @@ fun DetailElementItem(data: UserData) {
                         .weight(0.8f)
                 ) {
                     Text(
-                        text = data.item.name,
+                        text = data.item.toString(),
                         style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.Bold
                     )

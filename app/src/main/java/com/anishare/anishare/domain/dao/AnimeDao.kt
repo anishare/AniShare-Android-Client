@@ -11,7 +11,7 @@ interface AnimeDao {
 
     @Transaction
     @Query("SELECT * FROM Anime")
-    suspend fun getAll(): LiveData<List<AnimeWithAnimeMAL>>
+    fun getAll(): LiveData<List<AnimeWithAnimeMAL>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOne(anime: Anime)
