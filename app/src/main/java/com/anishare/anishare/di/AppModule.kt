@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.room.Room
 import com.anishare.anishare.BaseApplication
 import com.anishare.anishare.domain.AniShareDB
-import com.anishare.anishare.domain.dao.UserDataDao
 import com.anishare.anishare.domain.repository.AnimeRepo
 import com.anishare.anishare.domain.repository.MALRepo
 import com.anishare.anishare.domain.repository.UserDataRepo
@@ -58,7 +57,7 @@ object AppModule {
     @Singleton
     fun providesMalRep(db: AniShareDB, malService: MALService): MALRepo {
         // TODO - Add MalDao
-        return MALRepo(malService = malService)
+        return MALRepo(malService = malService, animeMALDao = db.animeMALDao)
     }
 
     @Provides

@@ -4,7 +4,8 @@ enum class AniShareScreen {
     Login,
     SignUp,
     Dashboard,
-    AddItem;
+    AddItem,
+    Recommend;
 
     companion object {
         fun fromRoute(route: String?): AniShareScreen =
@@ -12,6 +13,7 @@ enum class AniShareScreen {
                 Login.name -> Login
                 Dashboard.name -> Dashboard
                 AddItem.name -> AddItem
+                Recommend.name -> Recommend
                 null -> Dashboard
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }

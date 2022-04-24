@@ -38,7 +38,7 @@ fun UserResponseList(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navController.navigate(AniShareScreen.AddItem.name)
+                navController.navigate(AniShareScreen.Recommend.name)
             }) {
                 Icon(
                     imageVector = Icons.Default.Add,

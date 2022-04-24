@@ -12,12 +12,14 @@ private const val TAG = "MALRepo"
 
 //TODO - Cleanup and DB
 class MALRepo(
-//    private val animeMALDao: AnimeMALDao,
+    private val animeMALDao: AnimeMALDao,
     private val malService: MALService
 ) {
     suspend fun search(name: String, offset: Int = 0): MALResponse<List<AnimeMALNode>> {
         try {
-            return malService.searchAnime(name = name, offset = offset)
+            val res =  malService.searchAnime(name = name, offset = offset)
+            animeMALDao.insertAll(res.data.map { it.node })
+            return res
         } catch (e: Exception) {
             Log.e(TAG, e.toString())
         }
@@ -27,11 +29,18 @@ class MALRepo(
     suspend fun getAnime(id: Int): AnimeMAL? {
         try {
             val res = malService.getAnime(id)
-//            animeMALDao.insertOne(res)
-            return res
+            animeMALDao.insertOne(res)
         } catch (e: Exception) {
             Log.e(TAG, e.message.toString())
         }
-        return null
+        return animeMALDao.getOneById(id)
+    }
+
+    suspend fun insertOneToDB(animeMAL: AnimeMAL) {
+        try {
+            animeMALDao.insertOne(animeMAL)
+        } catch (e: Exception) {
+            Log.e(TAG, e.toString())
+        }
     }
 }

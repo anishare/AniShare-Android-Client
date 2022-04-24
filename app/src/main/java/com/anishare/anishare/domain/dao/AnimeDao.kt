@@ -3,6 +3,7 @@ package com.anishare.anishare.domain.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.anishare.anishare.domain.model.Anime
+import com.anishare.anishare.domain.model.AnimeMAL
 import com.anishare.anishare.domain.model.AnimeWithAnimeMAL
 import java.util.*
 
@@ -15,6 +16,15 @@ interface AnimeDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOne(anime: Anime)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOneIntoAnimeMAL(animeMAL: AnimeMAL)
+
+    @Transaction
+    suspend fun insert(anime: Anime, animeMAL: AnimeMAL) {
+        insertOneIntoAnimeMAL(animeMAL)
+        insertOne(anime)
+    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(animeList: List<Anime>)

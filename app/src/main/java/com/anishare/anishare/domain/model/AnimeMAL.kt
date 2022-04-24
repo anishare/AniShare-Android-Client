@@ -1,5 +1,6 @@
 package com.anishare.anishare.domain.model
 
+import androidx.annotation.Nullable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -16,8 +17,10 @@ data class AnimeMAL(
 //    val alternative_titles: AlternateTitles?,
 //    @Ignore
 //    val genres: List<Genres>,
-    val status: String,
-    val num_episodes: Int,
+    @Nullable
+    val status: String?,
+    @Nullable
+    val num_episodes: Int?,
 //    @Ignore
 //    val related_anime: List<RelatedAnime>
 ) {
