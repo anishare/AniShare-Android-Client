@@ -1,6 +1,5 @@
 package com.anishare.anishare.domain.model
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
@@ -11,10 +10,10 @@ data class UserData(
     val id: UUID = UUID.randomUUID(),
     val fromUser: String,
     val toUser: String,
-    val dateCreated: String,
+    val dateCreated: String = Calendar.getInstance().time.toString(),
     val item: UUID,
-    val isAnime: Boolean,
-    val isFinished: Boolean
+    val isAnime: Boolean = true,
+    val isFinished: Boolean = false
 ) {
     companion object {
         fun mock() = UserData(

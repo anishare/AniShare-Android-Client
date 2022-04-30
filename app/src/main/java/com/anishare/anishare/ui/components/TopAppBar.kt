@@ -19,7 +19,8 @@ import com.anishare.anishare.util.LoadingState
 @Composable
 fun TopAppBar(
     authViewModel: AuthViewModel = hiltViewModel(),
-    title: @Composable () -> Unit = {}
+    title: @Composable () -> Unit = {},
+    loginNav: () -> Unit = {}
 ) {
     val loadingState = authViewModel.loadingState.observeAsState()
     val auth = authViewModel.isUserAuthenticated.observeAsState()
@@ -48,6 +49,7 @@ fun TopAppBar(
                     }
                 } else {
                     IconButton(onClick = {
+                        loginNav()
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_baseline_login_24),

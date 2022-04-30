@@ -75,12 +75,12 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     //Coil
-    implementation 'io.coil-kt:coil-compose:2.0.0-rc02'
+    implementation 'io.coil-kt:coil-compose:2.0.0-rc03'
 
     //Retrofit, Coroutines and Hilt
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation 'com.google.firebase:firebase-auth-ktx'
     kapt "com.google.dagger:hilt-compiler:$hilt_version"

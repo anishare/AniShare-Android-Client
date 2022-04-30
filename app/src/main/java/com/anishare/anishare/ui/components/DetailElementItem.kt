@@ -20,16 +20,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.anishare.anishare.R
-import com.anishare.anishare.domain.model.AnimeMAL
-import com.anishare.anishare.domain.model.UserData
+import com.anishare.anishare.domain.model.AnimeWithAnimeMAL
+import com.anishare.anishare.domain.model.UserDataWithAnime
 
 @Composable
-fun DetailElementItem(data: UserData) {
+fun DetailElementItem(
+    userData: UserDataWithAnime? = null,
+    animeData: AnimeWithAnimeMAL? = null
+) {
     Card(
         modifier = Modifier
-            .padding(8.dp, 4.dp)
-            .fillMaxWidth()
-            .height(110.dp),
+            .fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp
     ) {
@@ -40,7 +41,7 @@ fun DetailElementItem(data: UserData) {
                     .fillMaxSize()) {
                 Image(
                     painter = rememberAsyncImagePainter(
-                        model = AnimeMAL.mock().main_picture?.medium,
+                        model = userData?.animeWithAnimeMAL?.animeMAL?.main_picture?.medium ?: animeData?.animeMAL?.main_picture?.medium,
                         placeholder = painterResource(R.drawable.ic_launcher_foreground),
                         fallback = painterResource(id = R.drawable.ic_launcher_background),
                     ),
@@ -48,7 +49,6 @@ fun DetailElementItem(data: UserData) {
                     modifier = Modifier
                         .height(32.dp)
                         .width(32.dp)
-                        .clip(CircleShape)
                 )
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -58,25 +58,27 @@ fun DetailElementItem(data: UserData) {
                         .weight(0.8f)
                 ) {
                     Text(
-                        text = data.item.toString(),
+                        text = userData?.animeWithAnimeMAL?.anime?.name ?: animeData?.anime?.name ?: "",
                         style = MaterialTheme.typography.subtitle1,
                         fontWeight = FontWeight.Bold
                     )
-                    Text(
-                        text = if (data.isFinished) "Watching" else "Ongoing",
-                        style = MaterialTheme.typography.caption,
-                        modifier = Modifier
-                            .background(
-                               Color.LightGray
-                            )
-                            .padding(4.dp)
-                    )
-                    Text(
-                        text = data.fromUser,
-                        style = MaterialTheme.typography.body1,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                    userData?.let {
+                        Text(
+                            text = if (it.userData.isFinished) "Watching" else "Ongoing",
+                            style = MaterialTheme.typography.caption,
+                            modifier = Modifier
+                                .background(
+                                   Color.LightGray
+                                )
+                                .padding(4.dp)
+                        )
+                        Text(
+                            text = it.userData.fromUser,
+                            style = MaterialTheme.typography.body1,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
         }
@@ -86,5 +88,5 @@ fun DetailElementItem(data: UserData) {
 @Preview(showBackground = true)
 @Composable
 fun ElementItemPreview() {
-    DetailElementItem(data = UserData.mock())
+    DetailElementItem()
 }

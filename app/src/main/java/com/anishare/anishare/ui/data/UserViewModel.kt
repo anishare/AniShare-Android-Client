@@ -32,34 +32,43 @@ class UserViewModel @Inject constructor(
 
     fun launchEvent(event: UserDataEvent) {
         viewModelScope.launch {
-            authRepo.getToken()?.addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Log.d(TAG, "Grabbed token successfully")
-                    when (event) {
-                        is UserDataEvent.GetListData -> getData("Bearer ${it.result.token}")
-                        is UserDataEvent.GetItem -> Log.d(TAG, "Get Item ${event.id}")
-                        is UserDataEvent.AddItem -> addItem(event.userData)
+            if (authRepo.isUserAuthenticated()) {
+                authRepo.getToken()?.addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Log.d(TAG, "Grabbed token successfully")
+                        callMethod(event = event, token = "Bearer ${it.result.token}")
+                    } else {
+                        Log.e(TAG, "Get Token failed ${it.exception?.message.toString()}")
                     }
-                } else {
-                    Log.e(TAG, it.exception?.message.toString())
                 }
+            } else {
+                callMethod(event = event)
             }
+        }
+    }
+
+    private fun callMethod(event: UserDataEvent, token: String? = null) {
+        when (event) {
+            is UserDataEvent.GetListData -> getData(token)
+            is UserDataEvent.GetItem -> Log.d(TAG, "Get Item ${event.id}")
+            is UserDataEvent.AddItem -> addItem(event.userData)
         }
     }
 
     private fun getData(token: String?) {
         viewModelScope.launch {
             try {
-                val response = userDataRepo.getAll(token!!)
+                val response = userDataRepo.getAll(token)
                 Log.d(TAG, response.value?.size.toString())
                 response.observeForever { t -> _userData.value = t }
             } catch (e: Exception) {
-                Log.e(TAG, e.message.toString())
+                Log.e(TAG, "Failed to get data $e")
             }
         }
     }
 
     private fun addItem(item: UserData) {
+        Log.d(TAG, "Getting Data")
         viewModelScope.launch {
             userDataRepo.insertOne(item)
         }

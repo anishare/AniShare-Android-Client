@@ -15,11 +15,13 @@ class UserDataRepoImpl(
     private val userService: UserService
 ): UserDataRepo {
     override suspend fun getAll(token: String?): LiveData<List<UserDataWithAnime>> {
-        try {
-            val data = userService.getTo(token!!)
-            dao.insertAll(data)
-        } catch (e: Exception) {
-            Log.e(TAG, e.message.toString())
+        token?.let {
+            try {
+                val data = userService.getTo(token)
+                dao.insertAll(data)
+            } catch (e: Exception) {
+                Log.e(TAG, e.message.toString())
+            }
         }
         return dao.getAll()
     }

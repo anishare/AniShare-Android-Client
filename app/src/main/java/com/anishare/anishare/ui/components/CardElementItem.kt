@@ -31,19 +31,19 @@ fun CardElementItem(
     modifier: Modifier = Modifier,
     userData: UserDataWithAnime? = null,
     malNode: AnimeMALNode? = null,
-    onClick: (() -> Unit)? = null,
-    selected: Boolean? = null
+    onClick: () -> Unit = {},
+    selected: Boolean = false
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .selectable(
-                selected = selected ?: false,
-                onClick = onClick ?: {}
+                selected = selected,
+                onClick = onClick
             )
         ,
         shape = RoundedCornerShape(15.dp),
-        border = if (selected == true) BorderStroke(1.dp, MaterialTheme.colors.primary) else null,
+        border = if (selected) BorderStroke(1.dp, MaterialTheme.colors.primary) else null,
         elevation = 5.dp
     ) {
         Box(modifier = Modifier.height(250.dp).width(150.dp)) {
@@ -51,7 +51,7 @@ fun CardElementItem(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(
                         malNode?.node?.main_picture?.medium ?:
-                        "https://cdn.myanimelist.net/images/anime/1105/119414l.jpg"
+                        userData?.animeWithAnimeMAL?.animeMAL?.main_picture?.medium
                     )
                     .crossfade(true)
                     .build(),

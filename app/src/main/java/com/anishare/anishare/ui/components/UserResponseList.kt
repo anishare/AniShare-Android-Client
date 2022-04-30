@@ -34,7 +34,10 @@ fun UserResponseList(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Dashboard") })
+            TopAppBar(
+                title = { Text(text = "Dashboard") },
+                loginNav = { navController.navigate(AniShareScreen.Login.name) }
+            )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {

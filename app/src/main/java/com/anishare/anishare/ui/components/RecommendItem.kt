@@ -20,14 +20,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.anishare.anishare.domain.model.Anime
+import com.anishare.anishare.domain.model.UserData
 import com.anishare.anishare.ui.data.AnimeViewModel
+import com.anishare.anishare.ui.data.UserViewModel
+import com.anishare.anishare.ui.util.UserDataEvent
 import com.anishare.anishare.util.AniShareScreen
 
 @Composable
 fun RecommendItem(
     modifier: Modifier = Modifier,
     navController: NavController,
-    animeViewModel: AnimeViewModel = hiltViewModel()
+    animeViewModel: AnimeViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel()
 ) {
     val animeList by animeViewModel.anime.observeAsState(listOf())
 
@@ -72,7 +76,9 @@ fun RecommendItem(
                     anime = it.anime
                     name = it.anime.name
                 },
-                itemContent = { Text(text = it.anime.name) }
+                itemContent = {
+                    DetailElementItem(animeData = it)
+                }
             )
             Button(
                 onClick = { navController.navigate(AniShareScreen.AddItem.name) },
@@ -82,6 +88,13 @@ fun RecommendItem(
             Divider()
             Button(
                 onClick = {
+                    userViewModel.launchEvent(UserDataEvent.AddItem(
+                        UserData(
+                            fromUser = "self",
+                            toUser = to,
+                            item = anime?.id!!
+                        )
+                    ))
                     Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
                     navController.navigate(AniShareScreen.Dashboard.name) {
                         popUpTo(AniShareScreen.Dashboard.name)
