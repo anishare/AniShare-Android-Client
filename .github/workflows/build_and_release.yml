@@ -20,6 +20,9 @@ jobs:
 
       - name: Clone repo
         uses: actions/checkout@v3
+        
+      - name: Set execution flag for gradlew
+        run: chmod +x gradlew
 
       - name: Build app
         run: ./gradlew assembleRelease
