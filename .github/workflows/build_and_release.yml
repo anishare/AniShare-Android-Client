@@ -21,6 +21,14 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v3
         
+      - name: Create file
+        run: cat /home/runner/work/AniShare-Android-Client/AniShare-Android-Client/app/google-services.json | base64
+        
+      - name: Putting data
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/AniShare-Android-Client/AniShare-Android-Client/app/google-services.json
+        
       - name: Set execution flag for gradlew
         run: chmod +x gradlew
 
