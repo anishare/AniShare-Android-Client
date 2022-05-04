@@ -1,9 +1,13 @@
 name: Tag Release
 on:
-  push:
-    branches: [ main ]
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
 jobs:
   tag_release:
+    if: github.event.pull_request.merged == true && ${{github.event.pull_request.title = 'v* into main'}}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -17,7 +21,7 @@ jobs:
         run: |
           versionName=`sed '2q;d' app_versions.gradle | cut -d "=" -f2 | xargs`
           export VERSION_NAME=$versionName
-          echo "::set-env name=VERSION_NAME::$VERSION_NAME"
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
       - name: Extract release notes
         id: extract_release_notes
         uses: ffurrer2/extract-release-notes@v1
