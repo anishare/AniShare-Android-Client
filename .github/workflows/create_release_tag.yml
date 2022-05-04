@@ -7,7 +7,7 @@ on:
       - closed
 jobs:
   tag_release:
-    if: github.event.pull_request.merged == true && ${{github.event.pull_request.title = 'v* into main'}}
+    if: github.event.pull_request.merged == true && ${{github.event.pull_request.title == 'v* into main'}}
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
