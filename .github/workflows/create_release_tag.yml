@@ -22,6 +22,8 @@ jobs:
           versionName=`sed '2q;d' app_versions.gradle | cut -d "=" -f2 | xargs`
           export VERSION_NAME=$versionName
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+      - name: Checkout main
+        run: git checkout main
       - name: Create Tag
         run: git tag v${{ env.VERSION_NAME }}
       - name: Push Tag
