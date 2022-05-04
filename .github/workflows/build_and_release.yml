@@ -57,7 +57,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           set -e
-          mv ${{ steps.sign_app.outputs.signedReleaseFile }} anishare-${{ env.VERSION_TAG }}.apk
+          mv app/build/outputs/apk/release/app-release-unsigned-signed.apk anishare-${{ env.VERSION_TAG }}.apk
           sha=`sha256sum anishare-${{ env.VERSION_TAG }}.apk | awk '{ print $1 }'`
           echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
       - name: Extract release notes
