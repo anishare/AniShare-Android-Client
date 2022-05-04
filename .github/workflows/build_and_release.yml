@@ -59,6 +59,9 @@ jobs:
           mv app/build/outputs/apk/release/app-release-unsigned.apk anishare-${{ env.VERSION_TAG }}.apk
           sha=`sha256sum anishare-${{ env.VERSION_TAG }}.apk | awk '{ print $1 }'`
           echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
+      - name: Extract release notes
+        id: extract_release_notes
+        uses: ffurrer2/extract-release-notes@v1
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
@@ -66,6 +69,7 @@ jobs:
           tag_name: ${{ env.VERSION_TAG }}
           name: AniShare ${{ env.VERSION_TAG }}
           body: |
+            ${{ steps.extract_release_notes.outputs.release_notes }}
             ---
             ### Checksums
             | Variant | SHA-256 |
