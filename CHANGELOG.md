@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.11] - 2022-05-04
+
 ## [1.0.10] - 2022-05-04
 
 ## [1.0.9] - 2022-05-04
@@ -23,7 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.3] - 2022-05-04
 
-[Unreleased]: https://github.com/anishare/AniShare-Android-Client/compare/1.0.10...HEAD
+[Unreleased]: https://github.com/anishare/AniShare-Android-Client/compare/1.0.11...HEAD
+
+[1.0.11]: https://github.com/anishare/AniShare-Android-Client/compare/1.0.10...1.0.11
 
 [1.0.10]: https://github.com/anishare/AniShare-Android-Client/compare/1.0.9...1.0.10
 
